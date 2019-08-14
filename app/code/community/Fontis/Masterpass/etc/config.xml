@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Fontis MasterPass Extension
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Fontis
+ * @package    Fontis_MasterPass
+ * @author     Matthew Gamble
+ * @copyright  Copyright (c) 2014 Fontis Pty. Ltd. (http://www.fontis.com.au)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+    <modules>
+        <Fontis_Masterpass>
+            <version>1.0.2</version>
+        </Fontis_Masterpass>
+    </modules>
+    <global>
+        <blocks>
+            <fontis_masterpass>
+                <class>Fontis_Masterpass_Block</class>
+            </fontis_masterpass>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_payment>Fontis_Masterpass_Block_Adminhtml_Sales_Orderpayment</sales_order_payment>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <fontis_masterpass>
+                <class>Fontis_Masterpass_Helper</class>
+            </fontis_masterpass>
+        </helpers>
+        <models>
+            <fontis_masterpass>
+                <class>Fontis_Masterpass_Model</class>
+            </fontis_masterpass>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <fontis_masterpass>
+                    <file>fontis/masterpass.xml</file>
+                </fontis_masterpass>
+            </updates>
+        </layout>
+        <routers>
+            <masterpass>
+                <use>standard</use>
+                <args>
+                    <module>Fontis_Masterpass</module>
+                    <frontName>masterpass</frontName>
+                </args>
+            </masterpass>
+        </routers>
+        <secure_url>
+            <masterpass>/masterpass/</masterpass>
+        </secure_url>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <masterpass_session_check>
+                        <class>fontis_masterpass/observer</class>
+                        <method>checkMasterpassDataInSession</method>
+                    </masterpass_session_check>
+                </observers>
+            </controller_action_predispatch>
+            <controller_action_predispatch_checkout_onepage_saveOrder>
+                <observers>
+                    <masterpass_checkout_redirect>
+                        <class>fontis_masterpass/observer</class>
+                        <method>redirectUserToMasterpass</method>
+                    </masterpass_checkout_redirect>
+                </observers>
+            </controller_action_predispatch_checkout_onepage_saveOrder>
+        </events>
+    </frontend>
+    <adminhtml>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <fontis_masterpass>
+                                            <title>MasterPass™</title>
+                                        </fontis_masterpass>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <fontis_masterpass>
+            <settings>
+                <enabled>0</enabled>
+                <title>MasterPass™</title>
+                <environment>2</environment>
+                <acceptancemark_size>32</acceptancemark_size>
+                <learn_more_language>en</learn_more_language>
+                <token_payments_accepted>0</token_payments_accepted>
+                <show_on_checkout>0</show_on_checkout>
+                <sort_order>20</sort_order>
+            </settings>
+        </fontis_masterpass>
+        <payment>
+            <fontis_masterpass>
+                <active>1</active>
+                <model>fontis_masterpass/payment</model>
+            </fontis_masterpass>
+        </payment>
+    </default>
+</config>
