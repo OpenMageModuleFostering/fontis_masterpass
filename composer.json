@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/Fontis_Masterpass",
+    "name": "openmage-module-fostering\/fontis_masterpass",
     "type": "magento-module",
-    "license": "Open-Software-License-(OSL-3.0)",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "Fontis extension for the MasterPass credit card wallet.",
     "authors": [
